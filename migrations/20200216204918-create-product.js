@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       keywords: {
-        type: DataTypes.TEXT,
+        type: Sequelize.TEXT,
         allowNull:true
       },
       createdAt: {

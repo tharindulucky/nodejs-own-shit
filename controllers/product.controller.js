@@ -2,12 +2,22 @@ const models = require('../models');
 
 function index(req, res, next){
     models.Product.findAll({
-        include: [models.Image, {model: models.Category, as: 'parentCategory'}, {model: models.Category, as: 'subCategory'}]
+        include: [models.Image, models.User, {model: models.Category, as: 'parentCategory'}, {model: models.Category, as: 'subCategory'}]
     }).then(result => {
 
         const response = {
             count: result.length,
             products: result.map(product => {
+
+                //User relation. Make it seperate 'cause u don't wanna include fields like password.
+                const userRel = {};
+                if(product.User != null){
+                    userRel.name = product.User.name;
+                    userRel.email = product.User.email;
+                    userRel.phone = product.User.phone;
+                    userRel.avatar = product.User.avatar;
+                }
+
                 return {
                     id: product.id,
                     name: product.name,
@@ -16,6 +26,7 @@ function index(req, res, next){
                     images: product.Images,
                     category: product.parentCategory,
                     sub_category: product.subCategory,
+                    user:userRel,
                     url: process.env.APP_URL+'/products/'+product.id
                 }
             })
@@ -41,6 +52,7 @@ function save(req, res, next) {
         parent_category: req.body.parent_category,
         sub_category: req.body.sub_category,
         keywords: req.body.keywords,
+        userId: req.userData.userId
     };
 
     models.Product.create(product).then(result => {
@@ -50,7 +62,7 @@ function save(req, res, next) {
             const product_image = {
                 url: url,
                 productId: result.id,
-                sellerId: '1',
+                sellerId: req.userData.userId,
                 status: 'published'
             }
             models.Image.create(product_image).then(result => {
@@ -75,10 +87,20 @@ function save(req, res, next) {
 function show(req, res, next) {
     const id = req.params.id;
     models.Product.findByPk(id, {
-        include: [models.Image, {model: models.Category, as: 'parentCategory'}, {model: models.Category, as: 'subCategory'}]
+        include: [models.Image, models.User, {model: models.Category, as: 'parentCategory'}, {model: models.Category, as: 'subCategory'}]
     }).then(result => {
 
         if(result){
+
+            //User relation. Make it seperate 'cause u don't wanna include fields like password.
+            const userRel = {};
+            if(result.User !== null){
+                userRel.name = result.User.name;
+                userRel.email = result.User.email;
+                userRel.phone = result.User.phone;
+                userRel.avatar = result.User.avatar;
+            }
+
             const response = {
                 title: result.title,
                 description: result.description,
@@ -86,6 +108,8 @@ function show(req, res, next) {
                 images: result.Images,
                 category: result.parentCategory,
                 sub_category: result.subCategory,
+                keywords:result.keywords,
+                user:userRel
             }
             res.status(200).json(response);
         }else{

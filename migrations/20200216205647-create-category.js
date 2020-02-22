@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       icon: {
-        type:DataTypes.STRING,
+        type:Sequelize.STRING,
         allowNull:true
       },
       createdAt: {

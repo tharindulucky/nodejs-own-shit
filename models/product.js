@@ -3,11 +3,15 @@ module.exports = (sequelize, DataTypes) => {
 
   const Image = sequelize.define('Image');
   const Category = sequelize.define('Category');
+  const User = sequelize.define('User');
 
   const Product = sequelize.define('Product', {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
-    price: DataTypes.STRING,
+    price: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     status: {
       type: DataTypes.STRING,
       defaultValue:'pending'
@@ -17,13 +21,15 @@ module.exports = (sequelize, DataTypes) => {
     keywords: {
       type: DataTypes.TEXT,
       allowNull:true
-    }
+    },
+    userId: DataTypes.INTEGER,
   }, {});
   Product.associate = function(models) {
     // associations can be defined here
     Product.hasMany(Image, {foreignKey: 'productId', onDelete: 'CASCADE', hooks:true});
     Product.belongsTo(Category, {as: 'parentCategory', foreignKey: 'parent_category' });
     Product.belongsTo(Category, {as: 'subCategory', foreignKey: 'sub_category' });
+    Product.belongsTo(User);
   };
   return Product;
 };
