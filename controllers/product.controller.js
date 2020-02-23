@@ -58,17 +58,20 @@ function save(req, res, next) {
     models.Product.create(product).then(result => {
 
         //Save data to ProductsImage table
-        req.body.images.map(url => {
-            const product_image = {
-                url: url,
-                productId: result.id,
-                sellerId: req.userData.userId,
-                status: 'published'
-            }
-            models.Image.create(product_image).then(result => {
-                console.log(result);
+        if(req.body.images){
+            req.body.images.map(url => {
+                const product_image = {
+                    url: url,
+                    productId: result.id,
+                    sellerId: req.userData.userId,
+                    status: 'published'
+                }
+                models.Image.create(product_image).then(result => {
+                    console.log(result);
+                });
             });
-        });
+        }
+
 
         res.status(201).json({
             message: 'Product Created Successfully',

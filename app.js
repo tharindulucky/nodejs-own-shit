@@ -4,6 +4,7 @@ const models = require('./models');
 
 const productRoutes = require('./routes/products');
 const userRoutes = require('./routes/users');
+const imageRoutes = require('./routes/images');
 
 const app = express();
 
@@ -17,6 +18,7 @@ models.sequelize.sync().then(() => {
 //middleware
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use('/uploads', express.static('uploads'));
 
 //Setting Headers for CORS
 app.use((req, res, next) => {
@@ -32,6 +34,7 @@ app.use((req, res, next) => {
 //routes
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
+app.use('/images', imageRoutes);
 
 /*
 Error Handling
