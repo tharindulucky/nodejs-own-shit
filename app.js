@@ -5,6 +5,8 @@ const models = require('./models');
 const productRoutes = require('./routes/products');
 const userRoutes = require('./routes/users');
 const imageRoutes = require('./routes/images');
+const orderRoutes = require('./routes/orders');
+const cartRoutes = require('./routes/carts');
 
 const app = express();
 
@@ -35,6 +37,8 @@ app.use((req, res, next) => {
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
 app.use('/images', imageRoutes);
+app.use('/orders', orderRoutes);
+app.use('/cart', cartRoutes);
 
 /*
 Error Handling

@@ -159,7 +159,7 @@ function update(req, res, next){
                 const product_image = {
                     url: url,
                     productId: id,
-                    sellerId: '1',
+                    sellerId: req.userData.userId,
                     status: 'published'
                 }
                 models.Image.create(product_image).then(result => {
