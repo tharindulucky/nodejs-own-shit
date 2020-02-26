@@ -1,5 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
+
+  const ProductsOrder = sequelize.define('ProductsOrder');
+
   const Order = sequelize.define('Order', {
     userId: DataTypes.INTEGER,
     status: {
@@ -8,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {});
   Order.associate = function(models) {
-    // associations can be defined here
+    Order.hasMany(ProductsOrder);
   };
   return Order;
 };
