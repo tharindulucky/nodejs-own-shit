@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:true
     },
     userId: DataTypes.INTEGER,
-  }, {});
+  }, {freezeTableName: true});
   Product.associate = function(models) {
     // associations can be defined here
     Product.hasMany(Image, {foreignKey: 'productId', onDelete: 'CASCADE', hooks:true});

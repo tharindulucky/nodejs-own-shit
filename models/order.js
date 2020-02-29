@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue:'pending'
     },
-  }, {});
+  }, {freezeTableName: true});
   Order.associate = function(models) {
     Order.hasMany(ProductsOrder);
   };

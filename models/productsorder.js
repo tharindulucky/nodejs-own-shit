@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     productId: DataTypes.INTEGER,
     orderId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
-  }, {});
+  }, {freezeTableName: true});
   ProductsOrder.associate = function(models) {
     ProductsOrder.belongsTo(Order, { targetKey: "id", foreignKey: "orderId" });
     ProductsOrder.belongsTo(Product, { targetKey: "id", foreignKey: "productId" });

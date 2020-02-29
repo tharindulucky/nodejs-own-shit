@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     productId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
     userId: DataTypes.INTEGER
-  }, {});
+  }, {freezeTableName: true});
   Cart.associate = function(models) {
     Cart.belongsTo(Product, { targetKey: "id", foreignKey: "productId" });
   };
