@@ -1,5 +1,5 @@
 const models = require('../models');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 
 function signUp(req, res, next) {
@@ -10,7 +10,8 @@ function signUp(req, res, next) {
                 message: "The email already exists"
             });
         }else{
-            bcrypt.hash(req.body.password, 10, (err, hash) => {
+            bcrypt.hash(req.body.password, bcrypt.genSaltSync(10), null, (err, hash) => {
+                console.log(err)
                 if(err){
                     return res.status(500).json({
                         error: err
