@@ -50,8 +50,7 @@ function create(req, res, next) {
             });
         }else{
             res.status(422).json({
-                message: 'Your cart is empty',
-                error: error
+                message: 'Your cart is empty'
             });
         }
 

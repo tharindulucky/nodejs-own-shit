@@ -53,7 +53,8 @@ function login(req, res, next){
                     const token = jwt.sign(
                         {
                             email: user.email,
-                            userId:user.id
+                            userId:user.id,
+                            userLevel:user.level,
                         },
                         process.env.JWT_KEY,
                         {
