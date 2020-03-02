@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'published'
     },
-  }, {freezeTableName: true});
+  }, {});
   Image.associate = function(models) {
     // associations can be defined here
   };

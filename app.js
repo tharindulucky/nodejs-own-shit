@@ -11,11 +11,11 @@ const cartRoutes = require('./routes/carts');
 const app = express();
 
 //DB Connection Sync
-models.sequelize.sync().then(() => {
-    console.log("DB Synced");
-}).catch((error) => {
-    console.log(error);
-});
+// models.sequelize.sync().then(() => {
+//     console.log("DB Synced");
+// }).catch((error) => {
+//     console.log(error);
+// });
 
 //middleware
 app.use(bodyParser.urlencoded({extended: false}));

@@ -1,10 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
 
-  const Image = sequelize.define('Image');
-  const Category = sequelize.define('Category');
-  const User = sequelize.define('User');
-
   const Product = sequelize.define('Product', {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
@@ -23,13 +19,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:true
     },
     userId: DataTypes.INTEGER,
-  }, {freezeTableName: true});
+  }, {});
   Product.associate = function(models) {
     // associations can be defined here
-    Product.hasMany(Image, {foreignKey: 'productId', onDelete: 'CASCADE', hooks:true});
-    Product.belongsTo(Category, {as: 'parentCategory', foreignKey: 'parent_category' });
-    Product.belongsTo(Category, {as: 'subCategory', foreignKey: 'sub_category' });
-    Product.belongsTo(User);
+    Product.hasMany(models.Image, {foreignKey: 'productId', onDelete: 'CASCADE', hooks:true});
+    Product.belongsTo(models.Category, {as: 'parentCategory', foreignKey: 'parent_category' });
+    Product.belongsTo(models.Category, {as: 'subCategory', foreignKey: 'sub_category' });
+    Product.belongsTo(models.User);
   };
   return Product;
 };
