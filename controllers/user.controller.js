@@ -1,6 +1,7 @@
 const models = require('../models');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv').config()
 
 function signUp(req, res, next) {
 
